@@ -63,7 +63,7 @@
   <main>
     <section style="{{ heroSection }}">
       <sc-for list="{{ heroSlides }}" as="slide" hint-placeholder-count="4">
-        <div style="{{ slide.wrap }}">
+        <div class="hero-slide" style="{{ slide.wrap }}">
           <img src="{{ slide.src }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:{{ heroFit }};filter:brightness(.82);animation:kenBurns 18s linear infinite alternate;animation-play-state:{{ heroPlay }}">
         </div>
       </sc-for>
@@ -536,6 +536,17 @@ class Component extends DCLogic {
     window.addEventListener("popstate", this.onPopState);
     this.onResize();
     document.title = TITLES[this.state.page] || TITLES.home;
+    // Nudge WebKit into actually starting the hero crossfade animation.
+    // Some Safari/WebKit builds leave a CSS animation on a freshly-inserted
+    // element stalled until a forced reflow (or a tap) wakes it up.
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".hero-slide").forEach((el) => {
+        const anim = el.style.animation;
+        el.style.animation = "none";
+        void el.offsetHeight;
+        el.style.animation = anim;
+      });
+    });
     // photos/photos.json is the editable photo list — drop files in photos/<folder>/ and add them there.
     fetch("/photos/photos.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
@@ -724,8 +735,13 @@ class Component extends DCLogic {
         : "position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(28px,6vw,72px);max-width:1240px;margin:0 auto",
       heroSlides: pick(man.hero, seq("hero", 7)).map((src, idx) => ({
         src: src,
+        // Slide 0 starts visible (not opacity:0) so there's always a photo on
+        // first paint even if the browser is slow to kick off the crossfade
+        // animation below — some WebKit builds don't start a CSS animation
+        // added to a freshly-inserted element until something forces a
+        // reflow, leaving the hero solid black until the visitor taps it.
         wrap: (narrow ? "position:absolute;top:0;left:0;right:0;height:" + s.heroH + "px;" : "position:absolute;inset:0;") +
-          "opacity:0;animation:heroFade 35s ease-in-out infinite;animation-delay:" +
+          "opacity:" + (idx === 0 ? "1" : "0") + ";animation:heroFade 35s ease-in-out infinite;animation-delay:" +
           idx * 5 + "s;animation-play-state:" + (s.heroOff ? "paused" : "running")
       })),
 
