@@ -30,7 +30,6 @@
   :focus-visible{outline:2px solid #b68235;outline-offset:2px}
   ::selection{background:rgba(182,130,53,.3)}
   img{display:block;max-width:100%}
-  @keyframes heroFade{0%{opacity:0}3%{opacity:1}12%{opacity:1}15%{opacity:0}100%{opacity:0}}
   @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   @keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.07)}}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -513,7 +512,7 @@ const ratioOf = (src, sizes) => {
 };
 
 class Component extends DCLogic {
-  state = { ...stateFromPath(typeof window !== "undefined" ? window.location.pathname : "/"), occasion: "Wedding", sent: false, sending: false, sendError: "", lb: -1, lbSet: null, scrolled: false, heroOff: false, narrow: false, heroH: 0, txt: null, sizes: null, name: "", email: "", date: "", location: "", message: "", man: null };
+  state = { ...stateFromPath(typeof window !== "undefined" ? window.location.pathname : "/"), occasion: "Wedding", sent: false, sending: false, sendError: "", lb: -1, lbSet: null, scrolled: false, heroOff: false, heroIdx: 0, narrow: false, heroH: 0, txt: null, sizes: null, name: "", email: "", date: "", location: "", message: "", man: null };
 
   currentImages() {
     const man = this.state.man || {};
@@ -522,11 +521,29 @@ class Component extends DCLogic {
     return pick(o.images, base.images);
   }
 
+  heroCount() {
+    const man = this.state.man || {};
+    return pick(man.hero, seq("hero", 7)).length;
+  }
+
+  // Driven from JS rather than a CSS @keyframes animation: some WebKit builds
+  // never start a CSS animation added to a freshly-inserted element until a
+  // tap forces a reflow, which left the hero stuck on one static photo on
+  // real iOS Safari. A setInterval + opacity transition doesn't depend on
+  // the animation engine deciding to kick in at all.
+  tickHero = () => {
+    if (this.state.heroOff) return;
+    const total = this.heroCount();
+    if (!total) return;
+    this.setState((s) => ({ heroIdx: (s.heroIdx + 1) % total }));
+  };
+
   componentWillUnmount() {
     window.removeEventListener("keydown", this.onKey);
     window.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("resize", this.onResize);
     window.removeEventListener("popstate", this.onPopState);
+    clearInterval(this.heroTimer);
   }
 
   componentDidMount() {
@@ -536,17 +553,7 @@ class Component extends DCLogic {
     window.addEventListener("popstate", this.onPopState);
     this.onResize();
     document.title = TITLES[this.state.page] || TITLES.home;
-    // Nudge WebKit into actually starting the hero crossfade animation.
-    // Some Safari/WebKit builds leave a CSS animation on a freshly-inserted
-    // element stalled until a forced reflow (or a tap) wakes it up.
-    requestAnimationFrame(() => {
-      document.querySelectorAll(".hero-slide").forEach((el) => {
-        const anim = el.style.animation;
-        el.style.animation = "none";
-        void el.offsetHeight;
-        el.style.animation = anim;
-      });
-    });
+    this.heroTimer = setInterval(this.tickHero, 5000);
     // photos/photos.json is the editable photo list — drop files in photos/<folder>/ and add them there.
     fetch("/photos/photos.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
@@ -733,17 +740,15 @@ class Component extends DCLogic {
       heroCopy: narrow
         ? "position:relative;padding:26px 20px 34px;background:#201f1d"
         : "position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(28px,6vw,72px);max-width:1240px;margin:0 auto",
-      heroSlides: pick(man.hero, seq("hero", 7)).map((src, idx) => ({
-        src: src,
-        // Slide 0 starts visible (not opacity:0) so there's always a photo on
-        // first paint even if the browser is slow to kick off the crossfade
-        // animation below — some WebKit builds don't start a CSS animation
-        // added to a freshly-inserted element until something forces a
-        // reflow, leaving the hero solid black until the visitor taps it.
-        wrap: (narrow ? "position:absolute;top:0;left:0;right:0;height:" + s.heroH + "px;" : "position:absolute;inset:0;") +
-          "opacity:" + (idx === 0 ? "1" : "0") + ";animation:heroFade 35s ease-in-out infinite;animation-delay:" +
-          idx * 5 + "s;animation-play-state:" + (s.heroOff ? "paused" : "running")
-      })),
+      heroSlides: (() => {
+        const list = pick(man.hero, seq("hero", 7));
+        const active = ((s.heroIdx % list.length) + list.length) % list.length;
+        return list.map((src, idx) => ({
+          src: src,
+          wrap: (narrow ? "position:absolute;top:0;left:0;right:0;height:" + s.heroH + "px;" : "position:absolute;inset:0;") +
+            "opacity:" + (idx === active ? "1" : "0") + ";transition:opacity 1.2s ease"
+        }));
+      })(),
 
       categories: CATSM.map((c) => ({
         title: c.title, blurb: c.blurb, cover: c.cover, count: c.images.length,
