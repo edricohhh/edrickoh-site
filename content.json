@@ -1,0 +1,109 @@
+{
+  "_readme": "Text content for the site. Edited through /admin, or by hand. Anything omitted falls back to the built-in default.",
+  "hero": {
+    "kicker": "Based in Singapore",
+    "headline": "Framing emotions, telling stories, capturing lives.",
+    "primaryCta": "See the work",
+    "secondaryCta": "Check my date"
+  },
+  "steps": [
+    {
+      "n": "01",
+      "title": "Say hello",
+      "body": "Send the date and a few details. I reply within 24 hours with availability and a clear quote — every line itemised."
+    },
+    {
+      "n": "02",
+      "title": "Plan it loosely",
+      "body": "A short call or a shared mood board. We agree timings, must-have shots and where to be when."
+    },
+    {
+      "n": "03",
+      "title": "Photographs, quickly",
+      "body": "A sneak peek within 48 hours, the full edited gallery within a week. Clients tell me the speed surprises them."
+    }
+  ],
+  "values": [
+    {
+      "n": "01",
+      "title": "Transparency",
+      "body": "You always know what to expect — what's included, what it costs, when it lands. Nothing appears on an invoice that wasn't discussed first."
+    },
+    {
+      "n": "02",
+      "title": "Flexibility",
+      "body": "Timings shift, plans change, weather happens. There's room to adapt without a renegotiation every time."
+    },
+    {
+      "n": "03",
+      "title": "Reliability",
+      "body": "I turn up early, I deliver when I said I would, and I answer messages. Five years of it, every single time."
+    }
+  ],
+  "contactFacts": [
+    {
+      "k": "Reply time",
+      "v": "Within 24 hours"
+    },
+    {
+      "k": "Sneak peek",
+      "v": "48 hours after the shoot"
+    },
+    {
+      "k": "Full gallery",
+      "v": "Within 1 week"
+    },
+    {
+      "k": "Based in",
+      "v": "Singapore — travel welcome"
+    }
+  ],
+  "categories": {
+    "weddings": {
+      "title": "Weddings & Pre-wedding",
+      "blurb": "Civil ceremonies, banquets and slow pre-wedding afternoons. Guided when you want it, invisible when you don't."
+    },
+    "events": {
+      "title": "Events & Openings",
+      "blurb": "Corporate events, store openings and launches — coverage that makes the room look as good as it felt."
+    },
+    "portraits": {
+      "title": "Portraits",
+      "blurb": "Individual, couple and family sittings. Natural light, gentle direction, no stiff shoulders."
+    },
+    "birthdays": {
+      "title": "Birthdays & Family",
+      "blurb": "First birthdays, milestone dinners and unruly family gatherings — documented, not staged."
+    }
+  },
+  "testimonials": [
+    {
+      "name": "Lionel & Lily",
+      "occasion": "Pre-wedding shoot",
+      "pos": "50% 50%",
+      "img": "opt/testimonial-lionel-lily.jpg",
+      "text": "We had such a great experience working with Edric! He made us feel comfortable and guided us throughout the shoot — even making an easy-to-follow mood board and chipping in ideas — making the experience easy and fun. Also knowing when to take breaks in between!\n\nThe photos turned out beautiful. He captured so many special moments perfectly, and the colours and framing were incredibly pleasing to the eye. Looking through the photos brought us right back to the day. Honestly, we were also impressed by how quickly he delivered everything.\n\nOverall it was a really memorable experience, and his talent truly shows through his work. 10/10 — we'll definitely continue rooting for him!"
+    },
+    {
+      "name": "David & Kristina",
+      "occasion": "Pre-wedding shoot",
+      "pos": "38% 50%",
+      "img": "opt/weddings/11.jpg",
+      "text": "We worked with Edric for our civil wedding photoshoot, and he was absolutely wonderful to work with. He made us feel extremely comfortable throughout the whole experience, which we really appreciated as we're not naturals in front of the camera. Edric guided us through different poses while keeping things relaxed and fun, and genuinely made us laugh, which helped the photos feel so natural and authentic.\n\nHe was also professional, responsive and timely in all our interactions. We're so grateful to have had Edric capture such a special moment in our lives, and we'd highly recommend him to anyone looking for someone who can make you feel at ease while capturing beautiful memories!"
+    },
+    {
+      "name": "Paloma",
+      "occasion": "First birthday & friends",
+      "pos": "50% 50%",
+      "img": "opt/testimonial-paloma.jpg",
+      "text": "Loved Edric's photography! I hired him for my baby's first birthday and for a hangout with my friends, and honestly, he was amazing. He captured all the best moments and I loved how everything turned out!"
+    },
+    {
+      "name": "Mira",
+      "occasion": "Family Portrait",
+      "pos": "50% 50%",
+      "img": "opt/testimonial-mira.jpg",
+      "text": "Edric is very professional in both photography and editing. Will definitely engage him again in the future. Good job!"
+    }
+  ]
+}

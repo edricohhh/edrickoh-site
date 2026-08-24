@@ -1,0 +1,175 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "photos/opt"
+public_folder: "/photos/opt"
+
+site_url: /
+logo_url: /photos/opt/edric-crop2.jpg
+
+collections:
+  - name: "words"
+    label: "Words"
+    files:
+      - name: "content"
+        label: "Site text"
+        file: "content.json"
+        format: "json"
+        fields:
+          - label: "Home page hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Small line above the headline", name: "kicker", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "text" }
+              - { label: "Left button", name: "primaryCta", widget: "string" }
+              - { label: "Right button", name: "secondaryCta", widget: "string" }
+
+          - label: "How it works (home page)"
+            name: "steps"
+            widget: "list"
+            summary: "{{fields.n}} — {{fields.title}}"
+            fields:
+              - { label: "Number", name: "n", widget: "string", hint: "01, 02, 03" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+
+          - label: "My approach (about page)"
+            name: "values"
+            widget: "list"
+            summary: "{{fields.n}} — {{fields.title}}"
+            fields:
+              - { label: "Number", name: "n", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+
+          - label: "Testimonials"
+            name: "testimonials"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Client name", name: "name", widget: "string" }
+              - { label: "Occasion", name: "occasion", widget: "string" }
+              - { label: "What they said", name: "text", widget: "text" }
+              - { label: "Photo", name: "img", widget: "image", required: false }
+              - { label: "Photo crop", name: "pos", widget: "string", required: false, default: "50% 50%", hint: "Left-to-right then top-to-bottom, e.g. 38% 50% pulls the crop left" }
+
+          - label: "Enquiry page facts"
+            name: "contactFacts"
+            widget: "list"
+            summary: "{{fields.k}} — {{fields.v}}"
+            fields:
+              - { label: "Label", name: "k", widget: "string" }
+              - { label: "Value", name: "v", widget: "string" }
+
+          - label: "Category names & descriptions"
+            name: "categories"
+            widget: "object"
+            fields:
+              - label: "Weddings & Pre-wedding"
+                name: "weddings"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "blurb", widget: "text" }
+              - label: "Events & Openings"
+                name: "events"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "blurb", widget: "text" }
+              - label: "Portraits"
+                name: "portraits"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "blurb", widget: "text" }
+              - label: "Birthdays & Family"
+                name: "birthdays"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "blurb", widget: "text" }
+
+  - name: "photos"
+    label: "Photos"
+    files:
+      - name: "photolist"
+        label: "Galleries & photos"
+        file: "photos/photos.json"
+        format: "json"
+        fields:
+          - label: "Home page slideshow"
+            name: "hero"
+            widget: "list"
+            field: { label: "Photo", name: "photo", widget: "image" }
+
+          - label: "Recent work grid (home page)"
+            name: "featured"
+            widget: "list"
+            field: { label: "Photo", name: "photo", widget: "image" }
+
+          - label: "About page"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Portrait of you", name: "portrait", widget: "image" }
+              - label: "Three photos at the bottom"
+                name: "strip"
+                widget: "list"
+                field: { label: "Photo", name: "photo", widget: "image" }
+
+          - label: "Galleries"
+            name: "categories"
+            widget: "object"
+            fields:
+              - label: "Weddings & Pre-wedding"
+                name: "weddings"
+                widget: "object"
+                fields:
+                  - { label: "Cover photo", name: "cover", widget: "image" }
+                  - label: "Photos"
+                    name: "images"
+                    widget: "list"
+                    field: { label: "Photo", name: "photo", widget: "image" }
+              - label: "Events & Openings"
+                name: "events"
+                widget: "object"
+                fields:
+                  - { label: "Cover photo", name: "cover", widget: "image" }
+                  - label: "Photos"
+                    name: "images"
+                    widget: "list"
+                    field: { label: "Photo", name: "photo", widget: "image" }
+              - label: "Portraits"
+                name: "portraits"
+                widget: "object"
+                fields:
+                  - { label: "Cover photo", name: "cover", widget: "image" }
+                  - label: "Photos"
+                    name: "images"
+                    widget: "list"
+                    field: { label: "Photo", name: "photo", widget: "image" }
+              - label: "Birthdays & Family"
+                name: "birthdays"
+                widget: "object"
+                fields:
+                  - { label: "Cover photo", name: "cover", widget: "image" }
+                  - label: "Photos"
+                    name: "images"
+                    widget: "list"
+                    field: { label: "Photo", name: "photo", widget: "image" }
+
+          - { label: "How it works photo (home page)", name: "stepsPhoto", widget: "image" }
+          - { label: "Enquiry page photo", name: "contactPhoto", widget: "image" }
+          - label: "Testimonial photos"
+            name: "testimonials"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Lionel & Lily", name: "Lionel & Lily", widget: "image", required: false }
+              - { label: "David & Kristina", name: "David & Kristina", widget: "image", required: false }
+              - { label: "Paloma", name: "Paloma", widget: "image", required: false }
+              - { label: "Mira", name: "Mira", widget: "image", required: false }
+          - { label: "Notes", name: "_readme", widget: "hidden" }

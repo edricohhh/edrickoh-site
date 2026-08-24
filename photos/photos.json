@@ -1,0 +1,127 @@
+{
+  "_readme": "Photo list for the site — edited through /admin or by hand. Paths are relative to photos/. Image dimensions live in sizes.json (generated, don't edit).",
+  "hero": [
+    "opt/hero/01.jpg",
+    "opt/hero/02.jpg",
+    "opt/hero/03.jpg",
+    "opt/hero/04.jpg",
+    "opt/hero/05.jpg",
+    "opt/hero/06.jpg",
+    "opt/hero/07.jpg"
+  ],
+  "featured": [
+    "opt/weddings/01.jpg",
+    "opt/events/05.jpg",
+    "opt/portraits/01.jpg",
+    "opt/birthdays/02.jpg",
+    "opt/weddings/09.jpg",
+    "opt/events/21.jpg",
+    "opt/portraits/14.jpg",
+    "opt/birthdays/07.jpg"
+  ],
+  "about": {
+    "portrait": "opt/edric-crop2.jpg",
+    "strip": [
+      "opt/about-strip-1.jpg",
+      "opt/portraits/15.jpg",
+      "opt/weddings/12.jpg"
+    ]
+  },
+  "categories": {
+    "weddings": {
+      "cover": "opt/weddings-cover.jpg",
+      "images": [
+        "opt/weddings/01.jpg",
+        "opt/weddings/02.jpg",
+        "opt/weddings/03.jpg",
+        "opt/weddings/04.jpg",
+        "opt/weddings/05.jpg",
+        "opt/weddings/06.jpg",
+        "opt/weddings/07.jpg",
+        "opt/weddings/08.jpg",
+        "opt/weddings/09.jpg",
+        "opt/weddings/10.jpg",
+        "opt/weddings/11.jpg",
+        "opt/weddings/12.jpg",
+        "opt/weddings/13.jpg",
+        "opt/weddings/14.jpg",
+        "opt/weddings/15.jpg",
+        "opt/weddings/16.jpg"
+      ]
+    },
+    "events": {
+      "cover": "opt/events-cover.jpg",
+      "images": [
+        "opt/events/01.jpg",
+        "opt/events/02.jpg",
+        "opt/events/03.jpg",
+        "opt/events/04.jpg",
+        "opt/events/05.jpg",
+        "opt/events/06.jpg",
+        "opt/events/07.jpg",
+        "opt/events/08.jpg",
+        "opt/events/09.jpg",
+        "opt/events/10.jpg",
+        "opt/events/11.jpg",
+        "opt/events/12.jpg",
+        "opt/events/13.jpg",
+        "opt/events/14.jpg",
+        "opt/events/15.jpg",
+        "opt/events/16.jpg",
+        "opt/events/17.jpg",
+        "opt/events/18.jpg",
+        "opt/events/19.jpg",
+        "opt/events/20.jpg",
+        "opt/events/21.jpg",
+        "opt/events/22.jpg",
+        "opt/events/23.jpg",
+        "opt/events/24.jpg",
+        "opt/events/25.jpg",
+        "opt/events/26.jpg",
+        "opt/events/27.jpg"
+      ]
+    },
+    "portraits": {
+      "cover": "opt/portraits-cover.jpg",
+      "images": [
+        "opt/portraits/01.jpg",
+        "opt/portraits/02.jpg",
+        "opt/portraits/03.jpg",
+        "opt/portraits/04.jpg",
+        "opt/portraits/05.jpg",
+        "opt/portraits/06.jpg",
+        "opt/portraits/07.jpg",
+        "opt/portraits/08.jpg",
+        "opt/portraits/09.jpg",
+        "opt/portraits/10.jpg",
+        "opt/portraits/11.jpg",
+        "opt/portraits/12.jpg",
+        "opt/portraits/13.jpg",
+        "opt/portraits/14.jpg",
+        "opt/portraits/15.jpg"
+      ]
+    },
+    "birthdays": {
+      "cover": "opt/birthdays-cover.jpg",
+      "images": [
+        "opt/birthdays/01.jpg",
+        "opt/birthdays/02.jpg",
+        "opt/birthdays/03.jpg",
+        "opt/birthdays/04.jpg",
+        "opt/birthdays/05.jpg",
+        "opt/birthdays/06.jpg",
+        "opt/birthdays/07.jpg",
+        "opt/birthdays/08.jpg",
+        "opt/birthdays/09.jpg"
+      ]
+    }
+  },
+  "testimonials": {
+    "Lionel & Lily": "opt/testimonial-lionel-lily.jpg",
+    "David & Kristina": "opt/weddings/11.jpg",
+    "Paloma": "opt/testimonial-paloma.jpg",
+    "Mira": "opt/testimonial-mira.jpg"
+  },
+  "contactPhoto": "opt/contact-photo.jpg",
+  "stepsPhoto": "opt/weddings/09.jpg"
+}

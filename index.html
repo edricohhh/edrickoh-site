@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&amp;family=Lora:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:#f3f2f2;color:#201f1d;font-family:"Lora",Georgia,serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,h5,h6{font-family:"Cormorant Garamond",Garamond,serif;margin:0;line-height:1.1;letter-spacing:-0.015em;font-weight:400}
+  p{margin:0}
+  a{color:#7d5411;text-decoration-color:rgba(182,130,53,.45);text-underline-offset:3px}
+  a:hover{color:#b68235;text-decoration-color:#b68235}
+  button{font:inherit;color:inherit}
+  :focus{outline:none}
+  :focus-visible{outline:2px solid #b68235;outline-offset:2px}
+  ::selection{background:rgba(182,130,53,.3)}
+  img{display:block;max-width:100%}
+  @keyframes heroFade{0%{opacity:0}3%{opacity:1}12%{opacity:1}15%{opacity:0}100%{opacity:0}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.07)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+  @keyframes cueDrift{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(7px);opacity:1}}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#f3f2f2">
+
+  <header style="{{ headerStyle }}">
+    <div style="{{ headerInner }}">
+      <button onClick="{{ goHome }}" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.04em">Edric Koh</span>
+        <span style="font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(32,31,29,.5);font-feature-settings:'tnum'">Photography · Singapore</span>
+      </button>
+      <nav style="display:flex;align-items:center;gap:clamp(14px,2.4vw,30px);flex-wrap:wrap;justify-content:flex-end">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <button onClick="{{ item.go }}" style="{{ item.style }}" style-hover="color:#b68235;border-color:#b68235">{{ item.label }}</button>
+        </sc-for>
+        <button onClick="{{ goContact }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:9px 18px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:rgba(182,130,53,.1);color:#5a3b0a">Enquire</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══════════ HOME ══════════ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main>
+    <section style="{{ heroSection }}">
+      <sc-for list="{{ heroSlides }}" as="slide" hint-placeholder-count="4">
+        <div style="{{ slide.wrap }}">
+          <img src="{{ slide.src }}" alt="" style="width:100%;height:100%;object-fit:{{ heroFit }};filter:brightness(.82);animation:kenBurns 18s linear infinite alternate;animation-play-state:{{ heroPlay }}">
+        </div>
+      </sc-for>
+      <div style="{{ heroScrim }}"></div>
+      <div style="{{ heroCue }}">
+        <span style="font-size:9px;letter-spacing:.28em;text-transform:uppercase">Scroll</span>
+        <span style="width:1px;height:26px;background:linear-gradient(180deg,rgba(250,203,141,.9),transparent);animation:cueDrift 2.6s ease-in-out infinite"></span>
+      </div>
+      <div style="{{ heroCopy }}">
+        <div style="animation:riseIn .9s ease both">
+          <div style="font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:rgba(250,203,141,.9);margin-bottom:18px;font-feature-settings:'tnum'">{{ heroKicker }}</div>
+          <h1 style="font-size:clamp(38px,7vw,88px);font-weight:300;color:#f8f4f4;max-width:16ch;line-height:1.02">{{ heroHeadline }}</h1>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:34px">
+            <button onClick="{{ goPortfolio }}" style="cursor:pointer;background:none;border:1px solid rgba(250,203,141,.85);color:#fff3e4;padding:13px 26px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:rgba(250,203,141,.16)">{{ heroCtaPrimary }}</button>
+            <button onClick="{{ goContact }}" style="cursor:pointer;background:none;border:1px solid rgba(248,244,244,.4);color:rgba(248,244,244,.85);padding:13px 26px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="border-color:#f8f4f4;color:#fff">{{ heroCtaSecondary }}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:clamp(56px,9vw,120px) clamp(18px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,6vw,80px);align-items:start">
+        <div>
+          <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:20px">Hello, I'm Edric</div>
+          <h2 style="font-size:clamp(28px,3.4vw,42px);font-weight:400;max-width:22ch">Five years of quiet attention, and a lot of people who felt at ease.</h2>
+        </div>
+        <div style="border-left:1px solid rgba(32,31,29,.16);padding-left:clamp(20px,3vw,40px)">
+          <p style="text-align:justify;hyphens:auto;margin-bottom:16px">I’ve been capturing moments for over five years, and photography has become both my passion and my purpose. Whether it’s a wedding morning, a store opening or a birthday you’ll want to remember in twenty years, I try to preserve it honestly — with artistry, and without the fuss.</p>
+          <p style="text-align:justify;hyphens:auto;color:rgba(32,31,29,.72)">Most of my clients tell me the same thing afterwards: they forgot the camera was there. That’s the whole job, really.</p>
+          <button onClick="{{ goAbout }}" style="margin-top:26px;cursor:pointer;background:none;border:0;border-bottom:1px solid #b68235;color:#7d5411;padding:4px 0;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.14em;text-transform:uppercase" style-hover="color:#5a3b0a">More about me</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#eae9e9;border-top:1px solid rgba(32,31,29,.16);border-bottom:1px solid rgba(32,31,29,.16)">
+      <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(18px,4vw,44px)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)">
+          <h2 style="font-size:clamp(26px,3vw,36px);font-weight:400">What I photograph</h2>
+          <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(32,31,29,.5)">Four ways to work together</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(16px,2.4vw,28px);animation:riseIn 1s cubic-bezier(.22,.61,.36,1) both;animation-timeline:view();animation-range:entry 0% entry 45%">
+          <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+            <button onClick="{{ cat.open }}" style="cursor:pointer;text-align:left;background:none;border:0;padding:0;display:flex;flex-direction:column;gap:16px" style-hover="opacity:.86">
+              <div style="border:6px solid #f3f2f2;outline:1px solid rgba(32,31,29,.16);overflow:hidden">
+                <img src="{{ cat.cover }}" alt="{{ cat.title }}" style="width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform 1.1s cubic-bezier(.22,.61,.36,1),filter .5s ease;will-change:transform" style-hover="transform:scale(1.05);filter:brightness(1.04) saturate(1.06)">
+              </div>
+              <div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:23px;margin-bottom:4px">{{ cat.title }}</div>
+                <div style="font-size:13px;color:rgba(32,31,29,.6);line-height:1.5">{{ cat.blurb }}</div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:clamp(56px,9vw,110px) clamp(18px,4vw,44px)">
+      <div style="text-align:center;margin-bottom:clamp(32px,5vw,60px)">
+        <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:14px">Selected frames</div>
+        <h2 style="font-size:clamp(26px,3.2vw,40px);font-weight:400">Recent work</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(14px,2vw,22px)">
+        <sc-for list="{{ featured }}" as="ph" hint-placeholder-count="6">
+          <figure onClick="{{ ph.open }}" style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16);overflow:hidden;cursor:zoom-in;grid-row-end:{{ ph.span }};transition:outline-color .5s ease;animation:riseIn 1s cubic-bezier(.22,.61,.36,1) both;animation-timeline:view();animation-range:entry 0% entry 45%" style-hover="outline-color:#b68235">
+            <img src="{{ ph.src }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;aspect-ratio:{{ ph.ratio }};transition:transform 1.1s cubic-bezier(.22,.61,.36,1),filter .5s ease;will-change:transform" style-hover="transform:scale(1.05);filter:brightness(1.04) saturate(1.06)">
+          </figure>
+        </sc-for>
+      </div>
+      <div style="text-align:center;margin-top:clamp(32px,5vw,56px)">
+        <button onClick="{{ goPortfolio }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:13px 30px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:rgba(182,130,53,.1)">View full portfolio</button>
+      </div>
+    </section>
+
+    <section style="background:#201f1d;color:#f8f4f4">
+      <div style="max-width:900px;margin:0 auto;padding:clamp(56px,9vw,120px) clamp(18px,4vw,44px);text-align:center">
+        <div style="font-size:44px;color:#b68235;font-family:'Cormorant Garamond',serif;line-height:.6;margin-bottom:22px">“</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.8vw,34px);line-height:1.35;font-style:italic;color:#f8f4f4">He made us feel comfortable and guided us throughout the shoot. Looking through the photos brought us right back to the day.</p>
+        <div style="margin-top:28px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(250,203,141,.8)">Lionel &amp; Lily</div>
+        <button onClick="{{ goTestimonials }}" style="margin-top:34px;cursor:pointer;background:none;border:0;border-bottom:1px solid rgba(250,203,141,.6);color:rgba(255,243,228,.9);padding:4px 0;font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase" style-hover="border-color:#facb8d;color:#fff">Read more kind words</button>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:clamp(56px,9vw,120px) clamp(18px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,5vw,64px);align-items:center">
+        <div style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16)">
+          <img src="{{ stepsPhoto }}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover">
+        </div>
+        <div>
+          <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:18px">How it works</div>
+          <h2 style="font-size:clamp(26px,3.2vw,40px);font-weight:400;margin-bottom:26px">No surprises, ever.</h2>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <sc-for list="{{ steps }}" as="step" hint-placeholder-count="3">
+              <div style="display:flex;gap:20px;padding:20px 0;border-top:1px solid rgba(32,31,29,.16)">
+                <span style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#b68235;font-feature-settings:'tnum';padding-top:5px">{{ step.n }}</span>
+                <div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:21px;margin-bottom:5px">{{ step.title }}</div>
+                  <p style="font-size:14.5px;color:rgba(32,31,29,.68)">{{ step.body }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ══════════ PORTFOLIO INDEX ══════════ -->
+  <sc-if value="{{ isPortfolio }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1240px;margin:0 auto;padding:clamp(44px,7vw,88px) clamp(18px,4vw,44px)">
+    <div style="max-width:640px;margin-bottom:clamp(36px,5vw,64px)">
+      <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:16px">Portfolio</div>
+      <h1 style="font-size:clamp(34px,5vw,62px);font-weight:300;margin-bottom:20px">Work, by occasion</h1>
+      <p style="text-align:justify;hyphens:auto;color:rgba(32,31,29,.72)">Weddings and pre-weddings, corporate events and openings, portraits and birthdays. Pick a room and have a look around — every gallery below is real client work, delivered.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+        <button onClick="{{ cat.open }}" style="cursor:pointer;background:none;border:0;border-top:1px solid rgba(32,31,29,.16);padding:clamp(20px,3vw,32px) 0;text-align:left;display:grid;grid-template-columns:minmax(160px,1fr) 2fr;gap:clamp(18px,4vw,44px);align-items:center" style-hover="background:rgba(182,130,53,.05)">
+          <div style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16);overflow:hidden">
+            <img src="{{ cat.cover }}" alt="{{ cat.title }}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform 1.1s cubic-bezier(.22,.61,.36,1),filter .5s ease;will-change:transform" style-hover="transform:scale(1.05);filter:brightness(1.04) saturate(1.06)">
+          </div>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px">
+              <span style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,34px)">{{ cat.title }}</span>
+              
+            </div>
+            <p style="font-size:15px;color:rgba(32,31,29,.68);max-width:52ch">{{ cat.blurb }}</p>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ══════════ GALLERY ══════════ -->
+  <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1400px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(18px,4vw,44px)">
+    <button onClick="{{ goPortfolio }}" style="cursor:pointer;background:none;border:0;padding:0;color:rgba(32,31,29,.55);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px" style-hover="color:#b68235">← All portfolio</button>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid rgba(32,31,29,.16);margin-bottom:clamp(24px,4vw,44px)">
+      <div>
+        <h1 style="font-size:clamp(30px,4.4vw,54px);font-weight:300;margin-bottom:10px">{{ galleryTitle }}</h1>
+        <p style="color:rgba(32,31,29,.68);max-width:56ch">{{ galleryBlurb }}</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ galleryTabs }}" as="tab" hint-placeholder-count="4">
+          <button onClick="{{ tab.open }}" style="{{ tab.style }}" style-hover="border-color:#b68235;color:#7d5411">{{ tab.title }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="columns:3 300px;column-gap:clamp(12px,1.6vw,20px)">
+      <sc-for list="{{ galleryImages }}" as="ph" hint-placeholder-count="8">
+        <figure onClick="{{ ph.open }}" style="break-inside:avoid;margin:0 0 clamp(12px,1.6vw,20px);border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16);overflow:hidden;cursor:zoom-in;transition:outline-color .5s ease;animation:fadeIn .9s ease both;animation-timeline:view();animation-range:entry 0% entry 55%" style-hover="outline-color:#b68235">
+          <img src="{{ ph.src }}" alt="" loading="lazy" style="width:100%;aspect-ratio:{{ ph.ratio }};transition:transform 1.1s cubic-bezier(.22,.61,.36,1),filter .5s ease;will-change:transform" style-hover="transform:scale(1.045);filter:brightness(1.04) saturate(1.06)">
+        </figure>
+      </sc-for>
+    </div>
+    <div style="text-align:center;padding:clamp(48px,7vw,90px) 0 0">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.6vw,30px);margin-bottom:22px">Something like this, for you?</p>
+      <button onClick="{{ goContact }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:13px 30px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:rgba(182,130,53,.1)">Check my availability</button>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ══════════ ABOUT ══════════ -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <main>
+    <section style="max-width:1240px;margin:0 auto;padding:clamp(44px,7vw,88px) clamp(18px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(30px,5vw,72px);align-items:center">
+        <div style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16)">
+          <img src="{{ aboutPortrait }}" alt="Edric Koh" style="width:100%;aspect-ratio:4/5;object-fit:cover">
+        </div>
+        <div>
+          <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:18px">Freelance photographer · Singapore</div>
+          <h1 style="font-size:clamp(34px,5vw,64px);font-weight:300;margin-bottom:24px">Hello, I’m Edric.</h1>
+          <p style="text-align:justify;hyphens:auto;margin-bottom:16px">I’ve been capturing moments for over five years, and photography has become both my passion and purpose. Whether it’s a corporate event, a store opening, or a birthday celebration, I strive to preserve each moment with authenticity and artistry. It’s always a pleasure to work with you and turn your memories into timeless visuals.</p>
+          <p style="text-align:justify;hyphens:auto;color:rgba(32,31,29,.72)">I shoot mostly natural light, I direct gently when you need it, and I stay out of the way when you don’t. If you’re nervous in front of a camera — most people are — that’s genuinely the part of the job I enjoy most.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:#eae9e9;border-top:1px solid rgba(32,31,29,.16);border-bottom:1px solid rgba(32,31,29,.16)">
+      <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,100px) clamp(18px,4vw,44px)">
+        <div style="max-width:700px;margin-bottom:clamp(30px,4vw,52px)">
+          <h2 style="font-size:clamp(26px,3.4vw,42px);font-weight:400;margin-bottom:20px">My approach</h2>
+          <p style="text-align:justify;hyphens:auto;color:rgba(32,31,29,.75)">I’ve heard countless stories from clients about frustrating experiences with photographers — miscommunication, inconsistency, unexpected costs. I get it. That’s why my approach is built on three core values.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(18px,3vw,32px)">
+          <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+            <div style="border:1px solid rgba(32,31,29,.16);border-radius:4px;padding:clamp(22px,3vw,32px);background:#f3f2f2;transition:border-color .4s ease,box-shadow .4s ease;animation:riseIn 1s cubic-bezier(.22,.61,.36,1) both;animation-timeline:view();animation-range:entry 0% entry 45%" style-hover="border-color:#b68235;box-shadow:0 2px 18px rgba(32,31,29,.06)">
+              <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#b68235;margin-bottom:14px;font-feature-settings:'tnum'">{{ v.n }}</div>
+              <h3 style="font-size:25px;margin-bottom:10px">{{ v.title }}</h3>
+              <p style="font-size:14.5px;color:rgba(32,31,29,.7)">{{ v.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:clamp(44px,7vw,88px) clamp(18px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(14px,2vw,22px)">
+        <sc-for list="{{ aboutStrip }}" as="ph" hint-placeholder-count="3">
+          <figure style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16)">
+            <img src="{{ ph.src }}" alt="" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform 1.1s cubic-bezier(.22,.61,.36,1),filter .5s ease;will-change:transform" style-hover="transform:scale(1.05);filter:brightness(1.04) saturate(1.06)">
+          </figure>
+        </sc-for>
+      </div>
+      <div style="text-align:center;padding-top:clamp(40px,6vw,72px)">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);margin-bottom:22px">Let’s work together.</p>
+        <button onClick="{{ goContact }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:13px 30px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:rgba(182,130,53,.1)">Let’s connect</button>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ══════════ TESTIMONIALS ══════════ -->
+  <sc-if value="{{ isTestimonials }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1100px;margin:0 auto;padding:clamp(44px,7vw,88px) clamp(18px,4vw,44px)">
+    <div style="max-width:600px;margin-bottom:clamp(36px,5vw,64px)">
+      <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:16px">Testimonials</div>
+      <h1 style="font-size:clamp(34px,5vw,62px);font-weight:300;margin-bottom:20px">Kind words</h1>
+      <p style="color:rgba(32,31,29,.72)">A little love from some of the amazing people I’ve had the pleasure of photographing.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="4">
+        <article style="animation:riseIn 1s cubic-bezier(.22,.61,.36,1) both;animation-timeline:view();animation-range:entry 0% entry 45%;border-top:1px solid rgba(32,31,29,.16);padding:clamp(28px,4vw,48px) 0;display:grid;grid-template-columns:minmax(140px,1fr) 2.2fr;gap:clamp(20px,4vw,48px);align-items:center">
+          <div>
+            <div style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16);margin-bottom:16px">
+              <img src="{{ t.img }}" alt="" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:{{ t.pos }}">
+            </div>
+            <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(32,31,29,.5);margin-bottom:5px">Kind words from</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:24px">{{ t.name }}</div>
+            <div style="font-size:12px;color:#7d5411;margin-top:4px">{{ t.occasion }}</div>
+          </div>
+          <div style="align-self:center;padding-bottom:clamp(38px,5vw,74px)">
+          <p style="text-align:justify;hyphens:auto;font-size:16.5px;color:rgba(32,31,29,.82);white-space:pre-line">{{ t.text }}</p></div>
+        </article>
+      </sc-for>
+    </div>
+    <div style="border-top:1px solid rgba(32,31,29,.16);text-align:center;padding:clamp(44px,6vw,80px) 0 0">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);margin-bottom:22px">Ready to connect?</p>
+      <button onClick="{{ goContact }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:13px 30px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:rgba(182,130,53,.1)">Get in touch</button>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1240px;margin:0 auto;padding:clamp(44px,7vw,88px) clamp(18px,4vw,44px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,6vw,80px);align-items:start">
+      <div>
+        <div style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#7d5411;margin-bottom:16px">Enquiries</div>
+        <h1 style="font-size:clamp(34px,5vw,58px);font-weight:300;margin-bottom:22px">Let’s check your date.</h1>
+        <p style="text-align:justify;hyphens:auto;color:rgba(32,31,29,.75);margin-bottom:28px">Tell me a little about the day and I’ll come back within 24 hours with availability, packages and a straight answer on cost. No obligation, no follow-up spam.</p>
+        <div style="border:6px solid #eae9e9;outline:1px solid rgba(32,31,29,.16);margin-bottom:28px">
+          <img src="{{ contactPhoto }}" alt="" style="width:100%;aspect-ratio:3/2;object-fit:cover">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ contactFacts }}" as="f" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid rgba(32,31,29,.16);font-size:14px">
+              <span style="color:rgba(32,31,29,.55);letter-spacing:.04em">{{ f.k }}</span>
+              <span style="text-align:right">{{ f.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(32,31,29,.16);border-radius:4px;padding:clamp(24px,3.5vw,40px);background:#eae9e9">
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:clamp(30px,5vw,60px) 0">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:34px;margin-bottom:14px">Thank you.</div>
+            <p style="color:rgba(32,31,29,.7);max-width:36ch;margin:0 auto 26px">Your enquiry is in. I’ll reply from edric@edrickoh.com within 24 hours — usually much sooner.</p>
+            <button onClick="{{ resetForm }}" style="cursor:pointer;background:none;border:0;border-bottom:1px solid #b68235;color:#7d5411;padding:4px 0;font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase">Send another</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h2 style="font-size:26px;margin-bottom:6px">Enquiry form</h2>
+          <p style="font-size:13px;color:rgba(32,31,29,.55);margin-bottom:26px">Takes about a minute.</p>
+          <div style="display:grid;gap:18px">
+            <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+              <label style="display:flex;flex-direction:column;gap:7px">
+                <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(32,31,29,.6)">{{ f.label }}</span>
+                <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="font-family:'Lora',serif;font-size:15px;padding:11px 13px;border:1px solid rgba(32,31,29,.28);border-radius:4px;background:#f8f4f4;color:#201f1d" style-focus="border-color:#b68235">
+              </label>
+            </sc-for>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(32,31,29,.6)">Occasion</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ occasions }}" as="o" hint-placeholder-count="4">
+                  <button onClick="{{ o.pick }}" style="{{ o.style }}" style-hover="border-color:#b68235">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(32,31,29,.6)">Tell me about the day</span>
+              <textarea rows="5" value="{{ message }}" onChange="{{ onMessage }}" placeholder="Venue, timings, how many guests, anything you're hoping for…" style="font-family:'Lora',serif;font-size:15px;padding:11px 13px;border:1px solid rgba(32,31,29,.28);border-radius:4px;background:#f8f4f4;color:#201f1d;resize:vertical" style-focus="border-color:#b68235"></textarea>
+            </label>
+            <button onClick="{{ submit }}" style="cursor:pointer;background:none;border:1px solid #b68235;color:#7d5411;padding:14px 24px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase;width:100%" style-hover="background:rgba(182,130,53,.12);color:#5a3b0a">{{ submitLabel }}</button>
+            <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:13px;color:#7d5411;text-align:center;border:1px solid rgba(182,130,53,.5);border-radius:4px;padding:10px 12px">{{ sendError }}</p>
+            </sc-if>
+            <p style="font-size:12px;color:rgba(32,31,29,.5);text-align:center">Or email me directly at kohedric@gmail.com</p>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ lbClose }}" style="position:fixed;inset:0;z-index:90;background:rgba(20,19,18,.95);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:clamp(14px,4vw,56px);cursor:zoom-out;animation:fadeIn .35s ease both">
+      <img src="{{ lbSrc }}" alt="" style="max-width:100%;max-height:100%;object-fit:contain;border:6px solid rgba(243,242,242,.9);animation:lbIn .5s cubic-bezier(.22,.61,.36,1) both">
+      <button onClick="{{ lbPrev }}" aria-label="Previous photo" style="position:absolute;left:clamp(10px,2vw,28px);top:50%;transform:translateY(-50%);cursor:pointer;background:rgba(32,31,29,.45);border:1px solid rgba(250,203,141,.5);color:#fff3e4;width:46px;height:46px;border-radius:50%;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1;transition:background .3s ease,border-color .3s ease" style-hover="background:rgba(182,130,53,.4);border-color:#facb8d">←</button>
+      <button onClick="{{ lbNext }}" aria-label="Next photo" style="position:absolute;right:clamp(10px,2vw,28px);top:50%;transform:translateY(-50%);cursor:pointer;background:rgba(32,31,29,.45);border:1px solid rgba(250,203,141,.5);color:#fff3e4;width:46px;height:46px;border-radius:50%;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1;transition:background .3s ease,border-color .3s ease" style-hover="background:rgba(182,130,53,.4);border-color:#facb8d">→</button>
+      <div style="position:absolute;bottom:clamp(12px,2.4vw,30px);left:0;right:0;text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(250,203,141,.75);font-feature-settings:'tnum'">{{ lbCounter }}</div>
+      <button onClick="{{ lbClose }}" aria-label="Close" style="position:absolute;top:clamp(12px,2vw,26px);right:clamp(12px,2vw,26px);cursor:pointer;background:none;border:0;color:rgba(248,244,244,.7);font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1;transition:color .3s ease" style-hover="color:#facb8d">×</button>
+    </div>
+  </sc-if>
+
+  <footer style="background:#201f1d;color:rgba(248,244,244,.7);margin-top:0">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(40px,6vw,72px) clamp(18px,4vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(24px,4vw,56px);padding-bottom:36px;border-bottom:1px solid rgba(248,244,244,.15)">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#f8f4f4;letter-spacing:.04em;margin-bottom:8px">Edric Koh</div>
+          <p style="font-size:13.5px;max-width:32ch">Framing emotions, telling stories, capturing lives — from Singapore, wherever you need me.</p>
+        </div>
+        <div>
+          <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,203,141,.8);margin-bottom:14px">Pages</div>
+          <div style="display:flex;flex-direction:column;gap:9px;align-items:flex-start">
+            <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+              <button onClick="{{ item.go }}" style="cursor:pointer;background:none;border:0;padding:0;font-family:'Lora',serif;font-size:14px;color:rgba(248,244,244,.7)" style-hover="color:#facb8d">{{ item.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,203,141,.8);margin-bottom:14px">Get in touch</div>
+          <div style="display:flex;flex-direction:column;gap:9px;font-size:14px">
+            <a href="mailto:kohedric@gmail.com" style="color:rgba(248,244,244,.7);text-decoration:none" style-hover="color:#facb8d">kohedric@gmail.com</a>
+            <a href="https://www.instagram.com/_fram_ed_/" target="_blank" rel="noopener" style="color:rgba(248,244,244,.7);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .3s ease" style-hover="color:#facb8d">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>@_fram_ed_</span>
+            </a>
+            <span>Singapore · SGT (UTC+8)</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11.5px;color:rgba(248,244,244,.45)">
+        <span>© 2026 Edric Koh. All photographs are my own.</span>
+        <span style="letter-spacing:.14em;text-transform:uppercase">Framing emotions since 2020</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+const IMG = "https://images-pw.pixieset.com/site/gxbrRa/";
+const P = {
+  a: IMG + "OKv5QP/EDR00914-78882134-1500.jpg",
+  b: IMG + "zD4P9r/EK100891-3f3e4b63-1500.jpg",
+  c: IMG + "Z7eeRD/EDR03716-56b6d1b3-1500.jpg",
+  d: IMG + "W844e3/EDR01215-af7facc2-1500.jpg",
+  e: IMG + "4AKe5V/EDR03975-f30a2390-1500.jpg",
+  f: IMG + "y4P7GJ/227B-7-bee09244-1500.jpg",
+  g: IMG + "9kkQY5/EDR03275-127c31d5-1500.jpg",
+  h: IMG + "pADKWX/EDR00721-a53f1b14-1500.jpg",
+  i: IMG + "vDoMb9/EK100287-3ce9e90f-1500.jpg",
+  j: IMG + "jXdbLO/EK101023-a912c5a5-1500.jpg",
+  k: IMG + "YX9dWQ/EDR00597-3b68b211-1500.jpg",
+  l: IMG + "xZ8Y8o/EDR08208-6737e625-1500.jpg",
+  m: IMG + "14VdXZ/EDR02314-558ae687-1500.jpg",
+  n: IMG + "OvlVak/EK100895-e1411882-1500.jpg",
+  o: IMG + "AEE4vr/EDR07053-ca07829c-1500.jpg",
+  p: IMG + "aqqrA1/EDR05526-622a9797-1500.jpg",
+  q: IMG + "PaaAWx/EDR-8-6a1fb090-1500.jpg",
+  r: IMG + "AEE4R6/EDR03205-baaeeffd-1500.jpg"
+};
+
+const seq = (dir, n) => Array.from({ length: n }, (_, i) => "./photos/" + dir + "/" + String(i + 1).padStart(2, "0") + ".jpg");
+const EVENTS = seq("events", 27);
+const WEDDINGS = seq("weddings", 16);
+const PORTRAITS = seq("portraits", 15);
+const BIRTHDAYS = seq("birthdays", 9);
+
+const CATS = [
+  { id: "weddings", title: "Weddings & Pre-wedding", blurb: "Civil ceremonies, banquets and slow pre-wedding afternoons. Guided when you want it, invisible when you don't.", cover: "./photos/weddings-cover.jpg", images: WEDDINGS },
+  { id: "events", title: "Events & Openings", blurb: "Corporate events, store openings and launches — coverage that makes the room look as good as it felt.", cover: "./photos/events-cover.jpg", images: EVENTS },
+  { id: "portraits", title: "Portraits", blurb: "Individual, couple and family sittings. Natural light, gentle direction, no stiff shoulders.", cover: "./photos/portraits-cover.jpg", images: PORTRAITS },
+  { id: "birthdays", title: "Birthdays & Family", blurb: "First birthdays, milestone dinners and unruly family gatherings — documented, not staged.", cover: "./photos/birthdays-cover.jpg", images: BIRTHDAYS }
+];
+
+const OCCASIONS = ["Wedding", "Pre-wedding", "Corporate event", "Portrait", "Birthday", "Something else"];
+
+// ── Enquiry form delivery ────────────────────────────────────────────────
+// Paste your Formspree form ID below (the part after /f/ in the endpoint they
+// give you, e.g. "xkgjabcd"). Submissions then arrive at kohedric@gmail.com.
+const FORMSPREE_ID = "xrpzjozd";
+
+// Resolve a manifest entry: bare names are relative to photos/, full URLs pass through.
+const rel = (p) => (/^(https?:|\.|\/)/.test(p) ? p : "./photos/" + p);
+const pick = (v, fallback) => (Array.isArray(v) && v.length ? v.map(rel) : fallback);
+
+// Reserve each frame's box before the bytes arrive, so masonry never re-balances mid-scroll.
+const ratioOf = (src, sizes) => {
+  const key = String(src).replace(/^\.?\/?photos\//, "");
+  const wh = (sizes && sizes[key]) || null;
+  return wh ? wh[0] + " / " + wh[1] : "3 / 4";
+};
+
+class Component extends DCLogic {
+  state = { page: "home", cat: "weddings", occasion: "Wedding", sent: false, sending: false, sendError: "", lb: -1, lbSet: null, scrolled: false, heroOff: false, narrow: false, heroH: 0, txt: null, sizes: null, name: "", email: "", date: "", location: "", message: "", man: null };
+
+  currentImages() {
+    const man = this.state.man || {};
+    const o = (man.categories || {})[this.state.cat] || {};
+    const base = CATS.find((c) => c.id === this.state.cat) || CATS[0];
+    return pick(o.images, base.images);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.onKey);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+  }
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.onKey);
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onResize, { passive: true });
+    this.onResize();
+    // photos/photos.json is the editable photo list — drop files in photos/<folder>/ and add them there.
+    fetch("./photos/photos.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((man) => { if (man) this.setState({ man: man }); })
+      .catch(() => {});
+
+    // Generated image dimensions — used to reserve each frame before the bytes land.
+    fetch("./photos/sizes.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((sz) => { if (sz) this.setState({ sizes: sz }); })
+      .catch(() => {});
+
+    // content.json holds the editable text (also written by the /admin CMS).
+    fetch("./content.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((txt) => { if (txt) this.setState({ txt: txt }); })
+      .catch(() => {});
+  }
+
+  go = (page, cat) => {
+    this.setState({ page: page, cat: cat || this.state.cat });
+    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+  };
+
+  set = (key) => (e) => this.setState({ [key]: e.target.value });
+
+  lbOpen = (i, list) => this.setState({ lb: i, lbSet: list });
+  lbClose = () => this.setState({ lb: -1 });
+  lbStep = (d) => (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this.setState((s) => {
+      const list = s.lbSet && s.lbSet.length ? s.lbSet : this.currentImages();
+      if (!list.length) return null;
+      return { lb: (s.lb + d + list.length) % list.length };
+    });
+  };
+
+  onKey = (e) => {
+    if (this.state.lb < 0) return;
+    if (e.key === "Escape") this.lbClose();
+    if (e.key === "ArrowRight") this.lbStep(1)();
+    if (e.key === "ArrowLeft") this.lbStep(-1)();
+  };
+
+  onResize = () => {
+    const w = window.innerWidth;
+    const n = w < 700;
+    // A real pixel height, not aspect-ratio: older mobile browsers collapse
+    // aspect-ratio boxes to zero and the hero photos vanish entirely.
+    const h = n ? Math.round(Math.min(w / 1.5, window.innerHeight * 0.62)) : 0;
+    if (n !== this.state.narrow || h !== this.state.heroH) this.setState({ narrow: n, heroH: h });
+  };
+
+  onScroll = () => {
+    if (this.raf) return;
+    this.raf = requestAnimationFrame(() => {
+      this.raf = null;
+      const y = window.scrollY;
+      const scrolled = y > 40;
+      // stop the hero's ken-burns layers compositing once they're off screen
+      const heroOff = y > window.innerHeight;
+      if (scrolled !== this.state.scrolled || heroOff !== this.state.heroOff) {
+        this.setState({ scrolled: scrolled, heroOff: heroOff });
+      }
+    });
+  };
+
+  submit = () => {
+    const s = this.state;
+    if (s.sending) return;
+    if (!s.name.trim() || !s.email.trim()) {
+      this.setState({ sendError: "Please add your name and email so I can reply." });
+      return;
+    }
+    if (!FORMSPREE_ID || FORMSPREE_ID === "PASTE_YOUR_FORM_ID") {
+      this.setState({ sent: true, sendError: "" });
+      return;
+    }
+    this.setState({ sending: true, sendError: "" });
+    fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: s.name,
+        email: s.email,
+        _replyto: s.email,
+        _subject: "New enquiry — " + s.occasion + (s.name ? " — " + s.name : ""),
+        occasion: s.occasion,
+        date: s.date,
+        location: s.location,
+        message: s.message
+      })
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error("bad status");
+        this.setState({ sending: false, sent: true });
+      })
+      .catch(() => this.setState({ sending: false, sendError: "Something went wrong sending that. Please email kohedric@gmail.com directly." }));
+  };
+
+  navBtn(active) {
+    return "cursor:pointer;background:none;border:0;border-bottom:1px solid " + (active ? "#b68235" : "transparent") +
+      ";padding:4px 1px;font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:" +
+      (active ? "#7d5411" : "rgba(32,31,29,.72)");
+  }
+
+  renderVals() {
+    const s = this.state;
+    const narrow = s.narrow;
+    const txt = s.txt || {};
+    const list = (v, dflt) => (Array.isArray(v) && v.length ? v : dflt);
+    const man = s.man || {};
+    const manCats = man.categories || {};
+    const CATSM = CATS.map((c) => {
+      const o = manCats[c.id] || {};
+      const t = ((txt.categories || {})[c.id]) || {};
+      return {
+        id: c.id, title: t.title || c.title, blurb: t.blurb || c.blurb,
+        cover: o.cover ? rel(o.cover) : c.cover, images: pick(o.images, c.images)
+      };
+    });
+    const cat = CATSM.find((c) => c.id === s.cat) || CATSM[0];
+    const lbList = s.lbSet && s.lbSet.length ? s.lbSet : cat.images;
+    const manT = man.testimonials || {};
+    const tImg = (name, dflt) => (manT[name] ? rel(manT[name]) : dflt);
+    const nav = [
+      { label: "Home", page: "home" },
+      { label: "Portfolio", page: "portfolio" },
+      { label: "About", page: "about" },
+      { label: "Testimonials", page: "testimonials" }
+    ];
+    const featuredSrc = pick(man.featured, [WEDDINGS[0], EVENTS[4], PORTRAITS[0], BIRTHDAYS[1], WEDDINGS[8], EVENTS[20], PORTRAITS[13], BIRTHDAYS[6]]);
+    const manAbout = man.about || {};
+
+    return {
+      isHome: s.page === "home",
+      isPortfolio: s.page === "portfolio",
+      isGallery: s.page === "gallery",
+      isAbout: s.page === "about",
+      isTestimonials: s.page === "testimonials",
+      isContact: s.page === "contact",
+
+      goHome: () => this.go("home"),
+      goPortfolio: () => this.go("portfolio"),
+      goAbout: () => this.go("about"),
+      goTestimonials: () => this.go("testimonials"),
+      goContact: () => this.go("contact"),
+
+      navItems: nav.map((n) => ({
+        label: n.label,
+        go: () => this.go(n.page),
+        style: this.navBtn(s.page === n.page || (n.page === "portfolio" && s.page === "gallery"))
+      })),
+
+      heroKicker: (txt.hero && txt.hero.kicker) || "Based in Singapore \u00b7 Available worldwide",
+      heroHeadline: (txt.hero && txt.hero.headline) || "Framing emotions, telling stories, capturing lives.",
+      heroCtaPrimary: (txt.hero && txt.hero.primaryCta) || "See the work",
+      heroCtaSecondary: (txt.hero && txt.hero.secondaryCta) || "Check my date",
+      heroPlay: s.heroOff ? "paused" : "running",
+      // On phones the photo sets the frame and the words sit beneath it, rather than
+      // a tall crop with the headline laid over the top.
+      heroSection: narrow
+        ? "position:relative;background:#201f1d"
+        : "position:relative;height:min(86vh,760px);overflow:hidden;background:#201f1d",
+      heroFit: narrow ? "contain" : "cover",
+      heroScrim: narrow
+        ? "position:relative;width:100%;height:" + s.heroH + "px;pointer-events:none"
+        : "position:absolute;inset:0;background:linear-gradient(180deg,rgba(32,31,29,.35) 0%,rgba(32,31,29,.1) 45%,rgba(32,31,29,.62) 100%)",
+      heroCue: narrow
+        ? "display:none"
+        : "position:absolute;bottom:clamp(18px,3vw,32px);right:clamp(18px,4vw,44px);z-index:2;display:flex;flex-direction:column;align-items:center;gap:7px;color:rgba(250,203,141,.85);pointer-events:none",
+      heroCopy: narrow
+        ? "position:relative;padding:26px 20px 34px;background:#201f1d"
+        : "position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(28px,6vw,72px);max-width:1240px;margin:0 auto",
+      heroSlides: pick(man.hero, seq("hero", 7)).map((src, idx) => ({
+        src: src,
+        wrap: (narrow ? "position:absolute;top:0;left:0;right:0;height:" + s.heroH + "px;" : "position:absolute;inset:0;") +
+          "opacity:0;animation:heroFade 35s ease-in-out infinite;animation-delay:" +
+          idx * 5 + "s;animation-play-state:" + (s.heroOff ? "paused" : "running")
+      })),
+
+      categories: CATSM.map((c) => ({
+        title: c.title, blurb: c.blurb, cover: c.cover, count: c.images.length,
+        open: () => this.go("gallery", c.id)
+      })),
+
+      featured: featuredSrc.map((src, idx) => ({
+        src: src, ratio: idx % 3 === 1 ? "3 / 4" : "4 / 3", span: "auto",
+        open: () => this.lbOpen(idx, featuredSrc)
+      })),
+
+      steps: list(txt.steps, [
+        { n: "01", title: "Say hello", body: "Send the date and a few details. I reply within 24 hours with availability and a clear quote — every line itemised." },
+        { n: "02", title: "Plan it loosely", body: "A short call or a shared mood board. We agree timings, must-have shots and where to be when." },
+        { n: "03", title: "Photographs, quickly", body: "A sneak peek within 48 hours, the full edited gallery within a week. Clients tell me the speed surprises them." }
+      ]),
+
+      galleryTitle: cat.title,
+      galleryBlurb: cat.blurb,
+      galleryImages: cat.images.map((src, i) => ({
+        src: src, ratio: ratioOf(src, s.sizes), open: () => this.lbOpen(i, cat.images)
+      })),
+      lightboxOpen: s.lb >= 0,
+      lbSrc: s.lb >= 0 ? lbList[s.lb] : "",
+      lbCounter: (s.lb + 1) + " / " + lbList.length,
+      lbClose: this.lbClose,
+      lbPrev: this.lbStep(-1),
+      lbNext: this.lbStep(1),
+      headerStyle: "position:sticky;top:0;z-index:40;background:rgba(243,242,242," + (s.scrolled ? ".97" : ".94") +
+        ");border-bottom:1px solid rgba(32,31,29," + (s.scrolled ? ".16" : ".08") +
+        ");transition:background .4s ease,border-color .4s ease,box-shadow .4s ease;box-shadow:" +
+        (s.scrolled ? "0 1px 14px rgba(32,31,29,.07)" : "none"),
+      headerInner: "max-width:1240px;margin:0 auto;padding:" + (s.scrolled ? "9px" : "16px") +
+        " clamp(18px,4vw,44px);display:flex;align-items:center;justify-content:space-between;gap:24px;transition:padding .4s cubic-bezier(.22,.61,.36,1)",
+      galleryTabs: CATSM.map((c) => ({
+        title: c.title,
+        open: () => this.go("gallery", c.id),
+        style: "cursor:pointer;background:" + (c.id === cat.id ? "rgba(182,130,53,.12)" : "none") +
+          ";border:1px solid " + (c.id === cat.id ? "#b68235" : "rgba(32,31,29,.22)") +
+          ";color:" + (c.id === cat.id ? "#7d5411" : "rgba(32,31,29,.66)") +
+          ";padding:8px 14px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase"
+      })),
+
+      values: list(txt.values, [
+        { n: "01", title: "Transparency", body: "You always know what to expect — what's included, what it costs, when it lands. Nothing appears on an invoice that wasn't discussed first." },
+        { n: "02", title: "Flexibility", body: "Timings shift, plans change, weather happens. There's room to adapt without a renegotiation every time." },
+        { n: "03", title: "Reliability", body: "I turn up early, I deliver when I said I would, and I answer messages. Five years of it, every single time." }
+      ]),
+
+      aboutStrip: pick(manAbout.strip, [EVENTS[24], PORTRAITS[14], WEDDINGS[11]]).map((src) => ({ src: src })),
+      stepsPhoto: (man.stepsPhoto ? rel(man.stepsPhoto) : "./photos/opt/weddings/09.jpg"),
+      aboutPortrait: manAbout.portrait ? rel(manAbout.portrait) : "./photos/opt/edric-crop2.jpg",
+      contactPhoto: man.contactPhoto ? rel(man.contactPhoto) : EVENTS[11],
+
+      testimonials: (Array.isArray(txt.testimonials) && txt.testimonials.length
+        ? txt.testimonials.map((t) => ({
+            name: t.name, occasion: t.occasion, text: t.text,
+            pos: t.pos || "50% 50%",
+            img: t.img ? rel(t.img) : tImg(t.name, WEDDINGS[0])
+          }))
+        : null) || [
+        { name: "Lionel & Lily", pos: "50% 50%", occasion: "Pre-wedding shoot", img: tImg("Lionel & Lily", "./photos/testimonial-lionel-lily.jpg"), text: "We had such a great experience working with Edric! He made us feel comfortable and guided us throughout the shoot — even making an easy-to-follow mood board and chipping in ideas — making the experience easy and fun. Also knowing when to take breaks in between!\n\nThe photos turned out beautiful. He captured so many special moments perfectly, and the colours and framing were incredibly pleasing to the eye. Looking through the photos brought us right back to the day. Honestly, we were also impressed by how quickly he delivered everything.\n\nOverall it was a really memorable experience, and his talent truly shows through his work. 10/10 — we'll definitely continue rooting for him!" },
+        { name: "David & Kristina", pos: "38% 50%", occasion: "Pre-wedding shoot", img: tImg("David & Kristina", WEDDINGS[10]), text: "We worked with Edric for our civil wedding photoshoot, and he was absolutely wonderful to work with. He made us feel extremely comfortable throughout the whole experience, which we really appreciated as we're not naturals in front of the camera. Edric guided us through different poses while keeping things relaxed and fun, and genuinely made us laugh, which helped the photos feel so natural and authentic.\n\nHe was also professional, responsive and timely in all our interactions. We're so grateful to have had Edric capture such a special moment in our lives, and we'd highly recommend him to anyone looking for someone who can make you feel at ease while capturing beautiful memories!" },
+        { name: "Paloma", pos: "50% 50%", occasion: "Birthday & Friends Celebrations", img: tImg("Paloma", "./photos/testimonial-paloma.jpg"), text: "Loved Edric's photography! I hired him for my baby's first birthday and for a hangout with my friends, and honestly, he was amazing. He captured all the best moments and I loved how everything turned out!" },
+        { name: "Mira", pos: "50% 50%", occasion: "Family Portrait", img: tImg("Mira", PORTRAITS[7]), text: "Edric is very professional in both photography and editing. Will definitely engage him again in the future. Good job!" }
+      ],
+
+      contactFacts: list(txt.contactFacts, [
+        { k: "Reply time", v: "Within 24 hours" },
+        { k: "Sneak peek", v: "48 hours after the shoot" },
+        { k: "Full gallery", v: "Within 1 week" },
+        { k: "Based in", v: "Singapore — travel welcome" }
+      ]),
+
+      fields: [
+        { label: "Your name", type: "text", value: s.name, placeholder: "Jane & Sam", onChange: this.set("name") },
+        { label: "Email", type: "email", value: s.email, placeholder: "you@email.com", onChange: this.set("email") },
+        { label: "Date of the shoot", type: "date", value: s.date, placeholder: "", onChange: this.set("date") },
+        { label: "Location / venue", type: "text", value: s.location, placeholder: "Singapore", onChange: this.set("location") }
+      ],
+
+      occasions: OCCASIONS.map((o) => ({
+        label: o,
+        pick: () => this.setState({ occasion: o }),
+        style: "cursor:pointer;background:" + (s.occasion === o ? "rgba(182,130,53,.14)" : "transparent") +
+          ";border:1px solid " + (s.occasion === o ? "#b68235" : "rgba(32,31,29,.24)") +
+          ";color:" + (s.occasion === o ? "#7d5411" : "rgba(32,31,29,.7)") +
+          ";padding:8px 13px;border-radius:4px;font-family:'Lora',serif;font-size:13.5px"
+      })),
+
+      message: s.message,
+      onMessage: this.set("message"),
+      sent: s.sent,
+      notSent: !s.sent,
+      submit: this.submit,
+      sending: s.sending,
+      sendError: s.sendError,
+      submitLabel: s.sending ? "Sending…" : "Send enquiry",
+      hasError: !!s.sendError,
+      resetForm: () => this.setState({ sent: false, sending: false, sendError: "", name: "", email: "", date: "", location: "", message: "" })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
